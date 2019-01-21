@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>WrongAnswer.wav</file>
+        <file>logo.png</file>
+    </qresource>
+</RCC>
