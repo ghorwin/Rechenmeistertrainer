@@ -159,8 +159,14 @@ void MainDialog::updateDiagram(const QString & playerName) {
 		y.push_back( (data[i].duration + data[i].errors*ERROR_PENALTY)/60);
 		y2.push_back(100-data[i].errors);
 	}
-	m_durationCurve->setSamples(&x[0], &y[0], data.size());
-	m_completedCurve->setSamples(&x[0], &y2[0], data.size());
+	if (data.isEmpty()) {
+		m_durationCurve->setSamples(QVector<QPointF>());
+		m_completedCurve->setSamples(QVector<QPointF>());
+	}
+	else {
+		m_durationCurve->setSamples(&x[0], &y[0], data.size());
+		m_completedCurve->setSamples(&x[0], &y2[0], data.size());
+	}
 }
 
 
