@@ -22,6 +22,41 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 CONFIG += c++11
 
+# check if 32 or 64 bit version and set prefix variable for using in output paths
+greaterThan(QT_MAJOR_VERSION, 4) {
+	contains(QT_ARCH, i386): {
+		DIR_PREFIX =
+	} else {
+		DIR_PREFIX = _x64
+	}
+} else {
+	DIR_PREFIX =
+}
+
+CONFIG(debug, debug|release) {
+	OBJECTS_DIR = debug$${DIR_PREFIX}
+	DESTDIR = ../../../bin/debug$${DIR_PREFIX}
+}
+else {
+	OBJECTS_DIR = release$${DIR_PREFIX}
+	DESTDIR = ../../../bin/release$${DIR_PREFIX}
+}
+
+MOC_DIR = moc
+UI_DIR = ui
+
+win32-msvc* {
+	QMAKE_CXXFLAGS += /wd4996
+	QMAKE_CFLAGS += /wd4996
+}
+else {
+	QMAKE_CXXFLAGS += -std=c++11
+}
+
+QMAKE_LIBDIR += ../../../externals/lib$${DIR_PREFIX}
+LIBS += -L../../../externals/lib$${DIR_PREFIX}
+
+
 INCLUDEPATH += /usr/include/qwt
 LIBS += -lqwt-qt5
 
@@ -40,4 +75,4 @@ FORMS += \
 
 
 RESOURCES += \
-	../../resources/EinMalEins.qrc
+	../../resources/Rechenmeistertrainer.qrc

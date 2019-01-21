@@ -98,12 +98,17 @@ MainDialog::MainDialog(QWidget *parent) :
 	updateHighscore();
 }
 
+
 MainDialog::~MainDialog() {
 	delete ui;
 }
 
 
 void MainDialog::on_pushButtonStart_clicked() {
+	if (ui->comboBoxPlayer->currentText().trimmed().isEmpty()) {
+		QMessageBox::critical(this, QString(), tr("Bitte einen Namen eingeben!"));
+		return;
+	}
 	EinMalEinsDialog dlg(this);
 
 	int res = dlg.exec();
