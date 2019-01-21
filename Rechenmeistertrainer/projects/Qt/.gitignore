@@ -1,1 +1,8 @@
 *.pro.user
+/debug_x64/
+/moc/
+/release_x64/
+/ui/
+/.qmake.stash
+/Makefile.Rechenmeistertrainer
+/qrc_Rechenmeistertrainer.cpp

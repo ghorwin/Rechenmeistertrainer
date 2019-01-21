@@ -7,6 +7,8 @@
 #include <QSound>
 #include <QMessageBox>
 
+#include <cmath>
+
 // time limit in seconds
 #define TIME_LIMIT 300
 

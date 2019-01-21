@@ -5,11 +5,39 @@
 TARGET = qwt6
 TEMPLATE = lib
 
-# this pri must be sourced from all our libraries,
-# it contains all functions defined for casual libraries
-include( ../../../IBK/projects/Qt/IBK.pri )
-
 QT += core gui svg printsupport concurrent
+
+# check if 32 or 64 bit version and set prefix variable for using in output paths
+greaterThan(QT_MAJOR_VERSION, 4) {
+		contains(QT_ARCH, i386): {
+				DIR_PREFIX =
+		} else {
+				DIR_PREFIX = _x64
+		}
+} else {
+		DIR_PREFIX =
+}
+
+CONFIG(debug, debug|release) {
+		OBJECTS_DIR = debug$${DIR_PREFIX}
+		DESTDIR = ../../../lib$${DIR_PREFIX}
+}
+else {
+		OBJECTS_DIR = release$${DIR_PREFIX}
+		DESTDIR = ../../../lib$${DIR_PREFIX}
+}
+
+MOC_DIR = moc
+UI_DIR = ui
+
+win32-msvc* {
+		QMAKE_CXXFLAGS += /wd4996
+		QMAKE_CFLAGS += /wd4996
+}
+else {
+		QMAKE_CXXFLAGS += -std=c++11
+}
+
 
 unix|mac {
 	VER_MAJ = 6
@@ -111,7 +139,6 @@ HEADERS += \
 	../../src/qwt_plot_magnifier.h \
 	../../src/qwt_plot_marker.h \
 	../../src/qwt_plot_multi_barchart.h \
-	../../src/qwt_plot_opengl_canvas.h \
 	../../src/qwt_plot_panner.h \
 	../../src/qwt_plot_picker.h \
 	../../src/qwt_plot_rasteritem.h \
@@ -218,7 +245,6 @@ SOURCES += \
 	../../src/qwt_plot_magnifier.cpp \
 	../../src/qwt_plot_marker.cpp \
 	../../src/qwt_plot_multi_barchart.cpp \
-	../../src/qwt_plot_opengl_canvas.cpp \
 	../../src/qwt_plot_panner.cpp \
 	../../src/qwt_plot_picker.cpp \
 	../../src/qwt_plot_rasteritem.cpp \

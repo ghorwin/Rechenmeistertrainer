@@ -57,8 +57,8 @@ QMAKE_LIBDIR += ../../../externals/lib$${DIR_PREFIX}
 LIBS += -L../../../externals/lib$${DIR_PREFIX}
 
 
-INCLUDEPATH += /usr/include/qwt
-LIBS += -lqwt-qt5
+INCLUDEPATH += ../../../externals/qwt/src
+LIBS += -L../../../externals/ -lqwt6
 
 SOURCES += \
 	../../src/main.cpp \
