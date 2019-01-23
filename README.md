@@ -15,7 +15,9 @@ Ein Mathetrainer für die Grundschule (1x1 und sowas).
 
 ### Linux
 
-#### Ubuntu 16.04 or newer
+QtCreator verwenden, Projektdatei `build/Qt/Rechenmeistertrainer.pro` öffnen und bauen.
+
+#### In der Kommandozeile bauen
 
 1. Qt 5.10 oder neuer von Qt herunterladen und installieren (wegen Multimedia-support)
 
