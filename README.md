@@ -23,7 +23,14 @@ Ein Mathetrainer für die Grundschule (1x1 und sowas).
 > sudo apt get install libqwt-qt5-dev
 ```
 
-2. Qt 5.10 oder neuer von Qt herunterladen und installieren
+2. Qt 5.10 oder neuer von Qt herunterladen und installieren (wegen Multimedia-support)
 
 3. Quelltext übersetzen und Programm starten
 
+```bash
+# in ~/Rechenmeistertrainer 
+> cd build/Qt
+> export PATH=/path/to/Qt5.10/bin:$PATH
+> qmake Rechenmeistertrainer.pro
+> make
+```
