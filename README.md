@@ -33,6 +33,6 @@ $ make
 
 ```bash
 # in Rechenmeistertrainer root dir
-$ export LD_LIBRARY_PATH=../../externals/lib_x64
-$ ../../bin/release_x64/Rechenmeistertrainer
+$ export LD_LIBRARY_PATH=externals/lib_x64
+$ bin/release_x64/Rechenmeistertrainer
 ```
