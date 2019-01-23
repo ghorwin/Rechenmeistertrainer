@@ -8,7 +8,13 @@ Ein Mathetrainer für die Grundschule (1x1 und sowas).
 3. Ein-mal-Eins Aufgabe starten
 4. Nach 5 Minuten oder wenn alle 100 Aufgaben gelöst sind, wird die Auswertung angezeigt und man sieht ein Diagramm der Lernleistung... mehr Übung = mehr Aufgaben richtig gelöst = mehr Punkte!
 
+### Ausgabe beim Test
 ![Ausgabe beim Test](doc/1x1_screen.png)
+
+### Lernfortschritt
+![Lernfortschritt](doc/progress_screen.png)
+
+Weitere Screenshots im doc-Verzeichnis.
 
 ## Download/Installation
 
