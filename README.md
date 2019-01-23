@@ -15,22 +15,24 @@ Ein Mathetrainer für die Grundschule (1x1 und sowas).
 
 ### Linux
 
-#### Ubuntu 16.04
+#### Ubuntu 16.04 or newer
 
-1. Qwt-Bibliothek installieren:
+1. Qt 5.10 oder neuer von Qt herunterladen und installieren (wegen Multimedia-support)
+
+2. Quelltext übersetzen
 
 ```bash
-> sudo apt get install libqwt-qt5-dev
+# in Rechenmeistertrainer root dir
+$ cd build/Qt
+$ export PATH=/path/to/Qt5.10/bin:$PATH
+$ qmake Rechenmeistertrainer.pro
+$ make
 ```
 
-2. Qt 5.10 oder neuer von Qt herunterladen und installieren (wegen Multimedia-support)
-
-3. Quelltext übersetzen und Programm starten
+3. LD_LIBRARY-Pfad zur qwt-lib setzen und Programm starten
 
 ```bash
-# in ~/Rechenmeistertrainer 
-> cd build/Qt
-> export PATH=/path/to/Qt5.10/bin:$PATH
-> qmake Rechenmeistertrainer.pro
-> make
+# in Rechenmeistertrainer root dir
+$ export LD_LIBRARY_PATH=../../externals/lib_x64
+$ ../../bin/release_x64/Rechenmeistertrainer
 ```
