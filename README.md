@@ -1,70 +1,61 @@
-# Rechenmeistertrainer
-Ein Mathetrainer für die Grundschule (1x1 und sowas).
+# Calculation Wizard (german: Rechenmeistertrainer)
+A mind calculation trainer for elementary school kids (helps to practice the 1x1).
 
-## Wie funktioniert der?
+## How does it work?
 
-1. Programm starten (siehe unten)
-2. Namen eingeben
-3. Ein-mal-Eins Aufgabe starten
-4. Nach 5 Minuten oder wenn alle 100 Aufgaben gelöst sind, wird die Auswertung angezeigt und man sieht ein Diagramm der Lernleistung... mehr Übung = mehr Aufgaben richtig gelöst = mehr Punkte!
+1. Download and start program (see below)
+2. Enter/select your name
+3. Start the 1x1 quiz
+4. After 5 minutes, or when all 100 problems are solved, the results are shown and the diagram with your learning progress is updated... more practice = more problems solved = more points!
 
-### Ausgabe beim Test
+### Screen during the test
 ![Ausgabe beim Test](doc/1x1_screen.png)
 
-### Lernfortschritt
+### Learning progress
 ![Lernfortschritt](doc/progress_screen.png)
 
-Weitere Screenshots im doc-Verzeichnis.
+More screenshots are in the doc-directory.
 
-### Highscore und Statistik
+### Highscore and statistics
 
-Nach jedem Lauf (max 5 Minuten) wird eine Highscore nach folgender Formel berechnet:
+After every run (max. 5 minutes) a highscore is shown with the following equation:
 
 ```
 duration_with_penalty = duration_in_seconds + not_completed*ERROR_PENALTY
 score = 100000/duration_with_penalty - 124
 ```
 
-`not_completed` ist die Anzahl der noch nicht korrekt beantworteten Fragen/leeren Felder (max 100). 
-`ERROR_PENALTY` ist eine Zeitstrafe (5 Sekunden). Damit ist duration_with_penalty  maximal 800 = (300 + 5*100) und 100000/800 = 125 -> score = 1
+`not_completed` is the number of not-yet-solved problems (empty fields, max 100). 
+`ERROR_PENALTY` is a time penalty (5 seconds). Hence, the max value for duration_with_penalty is 800 = (300 + 5*100) and 100000/800 = 125 -> score = 1
 
-Für jeden Testlauf werden Namen, Datum/Zeit, Dauer und Anzahl noch freier Felder abgelegt. Die Information wird in einer csv-Datei (Tab-getrennt) abgelegt, und zwar 
+Für every test run the name, date/time, duration and number of unsolved problems (free tiles) is stored. The information is stored in a csv-file (tab-separated), which is writen into the user's home directory:
 
-- entweder im benutzerspezifischen Datenverzeichnis, also z.B. unter `~/.local/share/kalwiz (calculation wizard)
-- oder global für alle Anwender (unter Windows, in /Users/public/...)
-
-Den Ort der gemeinschaftlichen Statistikdatei kann man im Einstellungsdialog anpassen.
-
+- Windows: `%HOME%/AppData/Roaming/Rechenmeister/statistics.csv`
+- Unix/Linux: `~/.local/share/Rechenmeister/statistics.csv`
 
 ## Download/Installation
 
 ### Windows
-- zip-Datei Herunterladen, entpacken und `Rechenmeistertrainer.exe` starten
+- download zip-file, extract, run `Rechenmeistertrainer.exe`
 
 ### Linux
 
-QtCreator verwenden, Projektdatei `build/Qt/Rechenmeistertrainer.pro` öffnen und bauen.
+#### Ubuntu 16.04 or newer
+- download tar.gz-file, install dependencies (packaged, see INSTALL-file inside the archive)
+- start `Rechenmeistertrainer` binary
 
-#### In der Kommandozeile bauen
+#### General
 
-1. Qt 5.10 oder neuer von Qt herunterladen und installieren (wegen Multimedia-support)
+- install qt5 and qwt dev packages
+- use QtCreator, open project/session file `build/Qt/Rechenmeistertrainer.pro` and build
 
-2. Quelltext übersetzen
+or in the command line
 
 ```bash
 # in Rechenmeistertrainer root dir
 $ cd build/Qt
-$ export PATH=/path/to/Qt5.10/bin:$PATH
 $ qmake Rechenmeistertrainer.pro
 $ make
-```
-
-3. LD_LIBRARY-Pfad zur qwt-lib setzen und Programm starten
-
-```bash
-# in Rechenmeistertrainer root dir
-$ export LD_LIBRARY_PATH=externals/lib_x64
-$ bin/release_x64/Rechenmeistertrainer
 ```
 
 

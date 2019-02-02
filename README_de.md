@@ -28,13 +28,10 @@ score = 100000/duration_with_penalty - 124
 `not_completed` ist die Anzahl der noch nicht korrekt beantworteten Fragen/leeren Felder (max 100). 
 `ERROR_PENALTY` ist eine Zeitstrafe (5 Sekunden). Damit ist duration_with_penalty  maximal 800 = (300 + 5*100) und 100000/800 = 125 -> score = 1
 
-Für jeden Testlauf werden Namen, Datum/Zeit, Dauer und Anzahl noch freier Felder abgelegt. Die Information wird in einer csv-Datei (Tab-getrennt) abgelegt, und zwar 
+Für jeden Testlauf werden Namen, Datum/Zeit, Dauer und Anzahl noch freier Felder abgelegt. Die Information wird in einer csv-Datei (Tab-getrennt) abgelegt:
 
-- entweder im benutzerspezifischen Datenverzeichnis, also z.B. unter `~/.local/share/kalwiz (calculation wizard)
-- oder global für alle Anwender (unter Windows, in /Users/public/...)
-
-Den Ort der gemeinschaftlichen Statistikdatei kann man im Einstellungsdialog anpassen.
-
+- Windows: `%HOME%/AppData/Roaming/Rechenmeister/statistics.csv`
+- Unix/Linux: `~/.local/share/Rechenmeister/statistics.csv`
 
 ## Download/Installation
 
