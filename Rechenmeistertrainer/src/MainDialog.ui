@@ -11,10 +11,10 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Rechenmeistertraining</string>
+   <string>Calculation wizard</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="EinMalEins.qrc">
+   <iconset resource="../resources/Rechenmeistertrainer.qrc">
     <normaloff>:/logo.png</normaloff>:/logo.png</iconset>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -23,7 +23,7 @@
      <item>
       <widget class="QLabel" name="label">
        <property name="text">
-        <string>Spieler:</string>
+        <string>Player:</string>
        </property>
       </widget>
      </item>
@@ -46,7 +46,7 @@
      <item>
       <widget class="QPushButton" name="pushButtonStart">
        <property name="text">
-        <string>1x1 starten...</string>
+        <string>Start 1x1 quiz...</string>
        </property>
       </widget>
      </item>
@@ -55,7 +55,7 @@
    <item>
     <widget class="QGroupBox" name="groupBox_2">
      <property name="title">
-      <string>Statistik</string>
+      <string>Statistics</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
@@ -80,7 +80,7 @@
    <item>
     <widget class="QGroupBox" name="groupBox">
      <property name="title">
-      <string>Bestenliste</string>
+      <string>Highscore</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
@@ -101,7 +101,7 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="EinMalEins.qrc"/>
+  <include location="../resources/Rechenmeistertrainer.qrc"/>
  </resources>
  <connections/>
 </ui>

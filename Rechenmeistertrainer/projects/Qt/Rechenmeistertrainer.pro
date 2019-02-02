@@ -1,6 +1,6 @@
 #-------------------------------------------------
 #
-# Project requires Qt 5.10
+# Project file for Rechenmeistertrainer
 #
 #-------------------------------------------------
 
@@ -56,9 +56,10 @@ else {
 QMAKE_LIBDIR += ../../../externals/lib$${DIR_PREFIX}
 LIBS += -L../../../externals/lib$${DIR_PREFIX}
 
-
-INCLUDEPATH += ../../../externals/qwt/src
-LIBS += -L../../../externals/ -lqwt6
+#win32-msvc* {
+	INCLUDEPATH += ../../../externals/qwt/src
+	LIBS += -L../../../externals/ -lqwt6
+#}
 
 SOURCES += \
 	../../src/main.cpp \
@@ -73,6 +74,12 @@ FORMS += \
 ../../src/MainDialog.ui \
 ../../src/EinMalEinsDialog.ui
 
-
 RESOURCES += \
 	../../resources/Rechenmeistertrainer.qrc
+
+TRANSLATIONS += \
+	../../resources/translations/Rechenmeistertrainer_de.ts
+
+DISTFILES += \
+	../../resources/translations/Rechenmeistertrainer_de.ts
+

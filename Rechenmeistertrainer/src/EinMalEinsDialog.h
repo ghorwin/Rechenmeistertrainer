@@ -10,7 +10,7 @@ class QToolButton;
 class QSound;
 
 namespace Ui {
-class EinMalEinsDialog;
+	class EinMalEinsDialog;
 }
 
 class EinMalEinsDialog : public QDialog {
@@ -25,9 +25,7 @@ public:
 private slots:
 
 	void onButtonClicked();
-
 	void onNextProblem();
-
 
 private:
 	Ui::EinMalEinsDialog *ui;

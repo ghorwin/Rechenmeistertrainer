@@ -28,6 +28,9 @@ private slots:
 	void on_comboBoxPlayer_currentIndexChanged(int index);
 
 private:
+	/*! Returns platform specific path to user statistics file. */
+	QString statsFile() const;
+
 	struct Stat {
 		QDateTime date;
 		int errors;

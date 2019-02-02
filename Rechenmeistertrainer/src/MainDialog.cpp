@@ -7,6 +7,10 @@
 #include <QComboBox>
 #include <QLineEdit>
 #include <QDebug>
+#include <QSettings>
+#include <QFileInfo>
+#include <QDir>
+
 #include <set>
 
 #include <qwt_plot_curve.h>
@@ -29,12 +33,12 @@ MainDialog::MainDialog(QWidget *parent) :
 
 	// setup diagram
 	QwtPlot & plot = *qobject_cast<QwtPlot*>(ui->plot);
-	plot.setTitle( "Bisherige Ergebnisse" );
+	plot.setTitle( tr("Learning progress") );
 	plot.setCanvasBackground( Qt::white );
 	// create a new curve to be shown in the plot and set some properties
 	m_durationCurve = new QwtPlotCurve();
-	m_durationCurve->setTitle( "Zeit (+5s je Fehler)" ); // will later be used in legend
-	m_durationCurve->setPen( QColor("navy"), 1 ), // color and thickness in pixels
+	m_durationCurve->setTitle( tr("Time (includes +5s for each missing problem)") ); // will later be used in legend
+	m_durationCurve->setPen( QColor("navy"), 1 ); // color and thickness in pixels
 	m_durationCurve->setRenderHint( QwtPlotItem::RenderAntialiased, true ); // use antialiasing}
 	m_durationCurve->setAxes(QwtPlot::xBottom, QwtPlot::yLeft);
 	m_durationCurve->attach( &plot );
@@ -42,12 +46,12 @@ MainDialog::MainDialog(QWidget *parent) :
 		QwtSymbol::Ellipse,    // Form
 		QBrush( Qt::white ),  // Füllung
 		QPen( QColor("navy"), 1 ),    // Rand
-		QSize( 4, 4 ) );       // Größe in Pixel
+		QSize( 5, 5 ) );       // Größe in Pixel
 	m_durationCurve->setSymbol( symbol );
 
 	m_completedCurve = new QwtPlotCurve();
-	m_completedCurve->setTitle( "gelöste Aufgaben" ); // will later be used in legend
-	m_completedCurve->setPen( QColor("darkred"), 1 ), // color and thickness in pixels
+	m_completedCurve->setTitle( tr("Solved problems") ); // will later be used in legend
+	m_completedCurve->setPen( QColor("darkred"), 1 ); // color and thickness in pixels
 	m_completedCurve->setRenderHint( QwtPlotItem::RenderAntialiased, true ); // use antialiasing}
 	m_completedCurve->setAxes(QwtPlot::xBottom, QwtPlot::yRight);
 	m_completedCurve->attach( &plot );
@@ -55,7 +59,7 @@ MainDialog::MainDialog(QWidget *parent) :
 		QwtSymbol::Rect,    // Form
 		QBrush( Qt::white ),  // Füllung
 		QPen( QColor("darkred"), 1 ),    // Rand
-		QSize( 5, 5 ) );       // Größe in Pixel
+		QSize( 4, 4 ) );       // Größe in Pixel
 	m_completedCurve->setSymbol( symbol );
 
 	QwtLegend * legend = new QwtLegend();
@@ -63,8 +67,8 @@ MainDialog::MainDialog(QWidget *parent) :
 
 	plot.setAxisScale( QwtPlot::yRight, 0.0, 100.0 );
 	plot.enableAxis(QwtPlot::yRight, true);
-	plot.setAxisTitle(QwtPlot::yLeft, QwtText("Zeit [min]"));
-	plot.setAxisTitle(QwtPlot::yRight, QwtText("Gelöst"));
+	plot.setAxisTitle(QwtPlot::yLeft, QwtText(tr("Time [min]")));
+	plot.setAxisTitle(QwtPlot::yRight, QwtText(tr("Solved")));
 
 	QwtPlotGrid *grid = new QwtPlotGrid();
 	grid->setMajorPen(QPen(Qt::DotLine));
@@ -73,7 +77,7 @@ MainDialog::MainDialog(QWidget *parent) :
 	plot.setAutoReplot(true);
 
 	// read old hight score
-	QFile in("Rechenmeistertrainer.csv");
+	QFile in(statsFile());
 	QTextStream strm(&in);
 	if (in.open(QFile::ReadOnly)) {
 		QString line;
@@ -106,7 +110,7 @@ MainDialog::~MainDialog() {
 
 void MainDialog::on_pushButtonStart_clicked() {
 	if (ui->comboBoxPlayer->currentText().trimmed().isEmpty()) {
-		QMessageBox::critical(this, QString(), tr("Bitte einen Namen eingeben!"));
+		QMessageBox::critical(this, QString(), tr("Please enter a name!"));
 		return;
 	}
 	EinMalEinsDialog dlg(this);
@@ -122,7 +126,7 @@ void MainDialog::on_pushButtonStart_clicked() {
 		// write and show statistics
 		m_stats[ui->comboBoxPlayer->currentText()].append(t);
 
-		QFile in("Rechenmeistertrainer.csv");
+		QFile in(statsFile());
 		in.open(QFile::WriteOnly | QFile::Truncate);
 		QTextStream strm(&in);
 
@@ -188,7 +192,7 @@ void MainDialog::updateHighscore() {
 	ui->tableWidget->verticalHeader()->setVisible(false);
 	ui->tableWidget->verticalHeader()->setDefaultSectionSize(18);
 	ui->tableWidget->setColumnCount(2);
-	ui->tableWidget->setHorizontalHeaderLabels(QStringList() << "Punkte" << "Spieler");
+	ui->tableWidget->setHorizontalHeaderLabels(QStringList() << tr("Points") << tr("Player"));
 	// create sorted list
 	std::set<Score> scoreList;
 	for (QMap<QString, QList<Stat> >::const_iterator it = m_stats.begin(); it != m_stats.end(); ++it) {
@@ -216,4 +220,20 @@ void MainDialog::updateHighscore() {
 	}
 	ui->tableWidget->resizeColumnToContents(0);
 	ui->tableWidget->horizontalHeader()->setStretchLastSection(true);
+}
+
+
+QString MainDialog::statsFile() const {
+	// we have different user data directories, based on OS
+#if defined(Q_OS_WIN)
+	// on Windows, we store user data unter %HOME%/AppData/Roaming
+	QString fname = QDir::toNativeSeparators(QDir::home().absolutePath() + "/AppData/Roaming/Rechenmeister/statistics.csv" + );
+#else
+	// on Unix/Mac OS we store user data under home directory
+	QString fname = QDir::toNativeSeparators(QDir::home().absolutePath() + "/.local/share/Rechenmeister/statistics.csv");
+#endif // Q_OS_WIN
+	QFileInfo fpath(fname);
+	if (!fpath.dir().exists())
+		QDir().mkpath(fpath.dir().absolutePath());
+	return fpath.absoluteFilePath();
 }

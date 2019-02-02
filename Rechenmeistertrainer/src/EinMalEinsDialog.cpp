@@ -4,8 +4,8 @@
 #include <QGridLayout>
 #include <QToolButton>
 #include <QTimer>
-#include <QSound>
 #include <QMessageBox>
+#include <QSound>
 
 #include <cmath>
 
@@ -128,8 +128,8 @@ void EinMalEinsDialog::onNextProblem() {
 
 		m_completed = 100 - missing; // number of solved problems
 		if (m_duration >= TIME_LIMIT) {
-			QMessageBox::information(this, tr("1x1 Erfolg"), tr("Die Zeit ist um. In %1:%2 Minuten hast Du %3 Aufgaben gelöst, dabei "
-																"hattest Du %4 Fehler.")
+			QMessageBox::information(this, tr("1x1 Success"), tr("The time is up. In %1:%2 minutes you have solved %3 problems, and "
+																"you had %4 errors.")
 									 .arg(std::floor((m_duration/60)))
 									 .arg((int)std::floor((m_duration/60 - std::floor(m_duration/60))*60),2,10,QLatin1Char('0'))
 									 .arg(m_completed)
@@ -137,7 +137,7 @@ void EinMalEinsDialog::onNextProblem() {
 
 		}
 		else {
-			QMessageBox::information(this, tr("1x1 Erfolg"), tr("Super! Alle Aufgaben in %1:%2 Minuten geschafft, mit %3 Fehlern.")
+			QMessageBox::information(this, tr("1x1 Success"), tr("Great! You solved all problems in %1:%2 minutes, with %3 errors.")
 									 .arg(std::floor((m_duration/60)))
 									 .arg((int)std::floor((m_duration/60 - std::floor(m_duration/60))*60),2,10,QLatin1Char('0'))
 									 .arg(m_errors));
@@ -148,7 +148,7 @@ void EinMalEinsDialog::onNextProblem() {
 	}
 
 	// randomly generate new request
-	m_currentProblemIndex = qrand()*(double)remainingProducts/RAND_MAX;
+	m_currentProblemIndex = (int)(qrand()*(double)remainingProducts/RAND_MAX);
 	const QPair<int,int> & problem = m_remainingProducts[m_currentProblemIndex];
 	m_product = problem.first*problem.second;
 
