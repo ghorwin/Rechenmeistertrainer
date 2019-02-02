@@ -56,10 +56,15 @@ else {
 QMAKE_LIBDIR += ../../../externals/lib$${DIR_PREFIX}
 LIBS += -L../../../externals/lib$${DIR_PREFIX}
 
-#win32-msvc* {
+win32-msvc* {
 	INCLUDEPATH += ../../../externals/qwt/src
 	LIBS += -L../../../externals/ -lqwt6
-#}
+}
+else {
+	# on linux use packaged qwt
+	INCLUDEPATH += /usr/include/qwt
+	LIBS += -lqwt-qt5
+}
 
 SOURCES += \
 	../../src/main.cpp \

@@ -1,0 +1,12 @@
+The software depends on Qt5 and the Qwt library.
+
+Ubuntu 16.04 and newer
+----------------------
+
+Install packages:
+
+qt5-default libqt5multimedia5 libqwt-qt5-6
+
+
+
+
