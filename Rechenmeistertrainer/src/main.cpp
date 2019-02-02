@@ -22,25 +22,17 @@ int main(int argc, char *argv[]) {
 		langId = langId.left(pos);
 
 	// nothing to be done for english
-	if (langId == "en") {
-		QLocale loc(QLocale::English);
-		loc.setNumberOptions(QLocale::OmitGroupSeparator | QLocale::RejectGroupSeparator);
-		QLocale::setDefault(loc);
-	}
-	else {
-		// install dir
-		QString installDir = QFileInfo(argv[0]).absoluteDir().path();
-		// check if we have a matching translation file
+	if (langId != "en") {
+		// load application translator
 		std::unique_ptr<QTranslator> applicationTranslator(new QTranslator);
-		if (applicationTranslator->load(":/translations/Rechenmeistertrainer_de.qm")) {
+		if (applicationTranslator->load(":/translations/Rechenmeistertrainer_"+langId+".qm")) {
 			qApp->installTranslator(applicationTranslator.release());
 			// also try to load the system translator
 			// install system translator
 			std::unique_ptr<QTranslator> systemTranslator(new QTranslator);
 
 			// system translator first
-			QString defaultTranslationFile = "qt_" + langId;
-			if (systemTranslator->load(defaultTranslationFile, installDir)) {
+			if (systemTranslator->load(":/translations/qt_"+langId+".qm")) {
 				qApp->installTranslator(systemTranslator.release());
 			}
 		}

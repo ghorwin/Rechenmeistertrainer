@@ -3,5 +3,6 @@
         <file>WrongAnswer.wav</file>
         <file>logo.png</file>
         <file>translations/Rechenmeistertrainer_de.qm</file>
+        <file>translations/qt_de.qm</file>
     </qresource>
 </RCC>
