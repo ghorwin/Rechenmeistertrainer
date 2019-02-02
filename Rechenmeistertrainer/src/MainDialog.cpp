@@ -227,7 +227,7 @@ QString MainDialog::statsFile() const {
 	// we have different user data directories, based on OS
 #if defined(Q_OS_WIN)
 	// on Windows, we store user data unter %HOME%/AppData/Roaming
-	QString fname = QDir::toNativeSeparators(QDir::home().absolutePath() + "/AppData/Roaming/Rechenmeister/statistics.csv" + );
+	QString fname = QDir::toNativeSeparators(QDir::home().absolutePath() + "/AppData/Roaming/Rechenmeister/statistics.csv");
 #else
 	// on Unix/Mac OS we store user data under home directory
 	QString fname = QDir::toNativeSeparators(QDir::home().absolutePath() + "/.local/share/Rechenmeister/statistics.csv");
