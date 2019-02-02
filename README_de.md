@@ -39,7 +39,7 @@ Den Ort der gemeinschaftlichen Statistikdatei kann man im Einstellungsdialog anp
 ## Download/Installation
 
 ### Windows
-- zip-Datei Herunterladen, entpacken und `Rechenmeistertrainer.exe` starten
+- zip-Datei herunterladen, entpacken und `Rechenmeistertrainer.exe` starten
 
 ### Linux
 
