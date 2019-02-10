@@ -82,7 +82,13 @@ MainDialog::MainDialog(QWidget *parent) :
 	if (in.open(QFile::ReadOnly)) {
 		QString line;
 		while (strm.readLineInto(&line)) {
+			if (line.trimmed().isEmpty())
+				continue;
 			QStringList tokens = line.split('\t');
+			if (tokens.size() != 3) {
+				qDebug() << QString("Error parsing line '%1' from statistics.csv").arg(line);
+			}
+
 			Stat t;
 			t.duration = tokens[1].toDouble();
 			t.errors = tokens[2].toInt();
