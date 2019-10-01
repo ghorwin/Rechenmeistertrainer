@@ -85,7 +85,7 @@ MainDialog::MainDialog(QWidget *parent) :
 			if (line.trimmed().isEmpty())
 				continue;
 			QStringList tokens = line.split('\t');
-			if (tokens.size() != 3) {
+			if (tokens.size() != 4) {
 				qDebug() << QString("Error parsing line '%1' from statistics.csv").arg(line);
 			}
 
@@ -200,23 +200,24 @@ void MainDialog::updateHighscore() {
 	ui->tableWidget->setColumnCount(2);
 	ui->tableWidget->setHorizontalHeaderLabels(QStringList() << tr("Points") << tr("Player"));
 	// create sorted list
-	std::set<Score> scoreList;
+	QList<Score> scoreList;
 	for (QMap<QString, QList<Stat> >::const_iterator it = m_stats.begin(); it != m_stats.end(); ++it) {
-		for (QList<Stat>::const_iterator stit = it->begin(); stit != it->end(); ++stit) {
+		for (QList<Stat>::const_iterator stit = it.value().begin(); stit != it.value().end(); ++stit) {
 			Score s;
 			int duration_with_penalty = stit->duration + stit->errors*ERROR_PENALTY;
 			// Good value: 100000/4 min = 100000/240 ~ 417
 			// Bad value: 100000(5 min mit 25 Fehlern) = 100000/425 =
 			// Worst value: 100000/5 min + 100 Fehler) = 100000/125
 
-			s.points = std::floor(100000/duration_with_penalty) - 124;
+			s.points = (int)(std::floor(100000.0/duration_with_penalty) - 124);
 			s.name = QString("%1 [%2]").arg(it.key()).arg(stit->date.toString("dd.MM.yyyy hh:mm"));
-			scoreList.insert(s);
+			scoreList.append(s);
 		}
 	}
+	std::sort(scoreList.begin(), scoreList.end());
 	ui->tableWidget->setRowCount(scoreList.size());
 	int i=0;
-	for (std::set<Score>::const_reverse_iterator it = scoreList.rbegin(); it != scoreList.rend(); ++it, ++i) {
+	for (QList<Score>::const_reverse_iterator it = scoreList.rbegin(); it != scoreList.rend(); ++it, ++i) {
 		QTableWidgetItem * item = new QTableWidgetItem(QString("%1").arg(it->points));
 		item->setFlags(Qt::ItemIsEnabled);
 		ui->tableWidget->setItem(i,0, item);
