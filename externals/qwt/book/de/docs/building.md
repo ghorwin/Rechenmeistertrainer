@@ -78,3 +78,8 @@ Die Beispiele (sofern konfiguriert) werden in `<qwt-root>/examples/bin` erstellt
 ## Visual Studio Projektdateien
 
 - mit Erstellen der Bibliothek (Qwt-vcproj)
+
+
+# Qwt Designer Plugins
+
+...

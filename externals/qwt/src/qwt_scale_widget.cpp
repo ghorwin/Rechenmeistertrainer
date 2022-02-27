@@ -768,10 +768,13 @@ int QwtScaleWidget::dimForLength( int length, const QFont &scaleFont ) const
     int dim = d_data->margin + extent + 1;
 
     if ( !d_data->title.isEmpty() )
-        dim += titleHeightForWidth( length ) + d_data->spacing;
+        dim += titleHeightForWidth( length );
 
     if ( d_data->colorBar.isEnabled && d_data->colorBar.interval.isValid() )
-        dim += d_data->colorBar.width + d_data->spacing;
+        dim += d_data->colorBar.width;
+
+    // add spacing
+    dim += d_data->spacing;
 
     return dim;
 }
@@ -785,9 +788,9 @@ int QwtScaleWidget::dimForLength( int length, const QFont &scaleFont ) const
   The maximum of this distance an the minimum border distance
   is returned.
 
-  \param start Return parameter for the border width at 
+  \param start Return parameter for the border width at
                the beginning of the scale
-  \param end Return parameter for the border width at the 
+  \param end Return parameter for the border width at the
              end of the scale
 
   \warning
@@ -825,9 +828,9 @@ void QwtScaleWidget::setMinBorderDist( int start, int end )
   Get the minimum value for the distances of the scale's endpoints from
   the widget borders.
 
-  \param start Return parameter for the border width at 
+  \param start Return parameter for the border width at
                the beginning of the scale
-  \param end Return parameter for the border width at the 
+  \param end Return parameter for the border width at the
              end of the scale
 
   \sa setMinBorderDist(), getBorderDistHint()

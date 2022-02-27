@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT += widgets core gui multimedia
+QT += widgets core gui multimedia svg
 
 TARGET = Rechenmeistertrainer
 TEMPLATE = app
@@ -36,10 +36,14 @@ greaterThan(QT_MAJOR_VERSION, 4) {
 CONFIG(debug, debug|release) {
 	OBJECTS_DIR = debug$${DIR_PREFIX}
 	DESTDIR = ../../../bin/debug$${DIR_PREFIX}
+	QMAKE_LIBDIR += ../../../externals/lib$${DIR_PREFIX}/debug
+	LIBS += -L../../../externals/lib$${DIR_PREFIX}/debug
 }
 else {
 	OBJECTS_DIR = release$${DIR_PREFIX}
 	DESTDIR = ../../../bin/release$${DIR_PREFIX}
+	QMAKE_LIBDIR += ../../../externals/lib$${DIR_PREFIX}/release
+	LIBS += -L../../../externals/lib$${DIR_PREFIX}/release
 }
 
 MOC_DIR = moc
@@ -53,8 +57,6 @@ else {
 	QMAKE_CXXFLAGS += -std=c++11
 }
 
-QMAKE_LIBDIR += ../../../externals/lib$${DIR_PREFIX}
-LIBS += -L../../../externals/lib$${DIR_PREFIX}
 
 win32-msvc* {
 	INCLUDEPATH += ../../../externals/qwt/src

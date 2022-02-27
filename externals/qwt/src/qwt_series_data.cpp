@@ -330,9 +330,22 @@ QRectF QwtIntervalSeriesData::boundingRect() const
 QwtVectorFieldData::QwtVectorFieldData(
         const QVector<QwtVectorSample> &samples ):
     QwtArraySeriesData<QwtVectorSample>( samples ),
-    d_maxMagnitude( -1.0 )
+    d_maxMagnitude( -1.0 ),
+    d_minMagnitude( -1.0 )
 {
 }
+
+
+/*!
+  Assign an array of samples (overloaded to reset min/max values).
+  \param samples Array of samples
+*/
+void QwtVectorFieldData::setSamples( const QVector<QwtVectorSample> &samples ) {
+    QwtArraySeriesData<QwtVectorSample>::setSamples(samples);
+    d_maxMagnitude = -1.0;
+    d_minMagnitude = -1.0;
+}
+
 
 /*!
   \brief Calculate the bounding rectangle
@@ -352,9 +365,11 @@ QRectF QwtVectorFieldData::boundingRect() const
 
 double QwtVectorFieldData::maxMagnitude() const
 {
+    // update min and max magnitude values in the same loop
     if ( d_maxMagnitude < 0.0 )
     {
         double max = 0.0;
+        double min = 0.0;
 
         for ( uint i = 0; i < size(); i++ )
         {
@@ -363,12 +378,23 @@ double QwtVectorFieldData::maxMagnitude() const
             const double l = s.vx * s.vx + s.vy * s.vy;
             if ( l > max )
                 max = l;
+            if (i == 0 || l < min)
+                min = l;
         }
 
         d_maxMagnitude = ::sqrt( max );
+        d_minMagnitude = ::sqrt( min );
     }
 
     return d_maxMagnitude;
+}
+
+double QwtVectorFieldData::minMagnitude() const
+{
+    if ( d_minMagnitude < 0.0 )
+        maxMagnitude(); // updates both min and max
+
+    return d_minMagnitude;
 }
 
 QwtSetSeriesData::QwtSetSeriesData(

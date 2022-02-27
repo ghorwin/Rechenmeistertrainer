@@ -6,6 +6,7 @@ TARGET = qwt6
 TEMPLATE = lib
 
 QT += core gui svg printsupport concurrent
+CONFIG += static
 
 # check if 32 or 64 bit version and set prefix variable for using in output paths
 greaterThan(QT_MAJOR_VERSION, 4) {
@@ -20,11 +21,11 @@ greaterThan(QT_MAJOR_VERSION, 4) {
 
 CONFIG(debug, debug|release) {
 		OBJECTS_DIR = debug$${DIR_PREFIX}
-		DESTDIR = ../../../lib$${DIR_PREFIX}
+		DESTDIR = ../../../lib$${DIR_PREFIX}/debug
 }
 else {
 		OBJECTS_DIR = release$${DIR_PREFIX}
-		DESTDIR = ../../../lib$${DIR_PREFIX}
+		DESTDIR = ../../../lib$${DIR_PREFIX}/release
 }
 
 MOC_DIR = moc
@@ -139,6 +140,7 @@ HEADERS += \
 	../../src/qwt_plot_magnifier.h \
 	../../src/qwt_plot_marker.h \
 	../../src/qwt_plot_multi_barchart.h \
+	../../src/qwt_plot_opengl_canvas.h \
 	../../src/qwt_plot_panner.h \
 	../../src/qwt_plot_picker.h \
 	../../src/qwt_plot_rasteritem.h \
@@ -152,6 +154,7 @@ HEADERS += \
 	../../src/qwt_plot_svgitem.h \
 	../../src/qwt_plot_textlabel.h \
 	../../src/qwt_plot_tradingcurve.h \
+	../../src/qwt_plot_vectorfield.h \
 	../../src/qwt_plot_zoneitem.h \
 	../../src/qwt_plot_zoomer.h \
 	../../src/qwt_point_3d.h \
@@ -245,6 +248,7 @@ SOURCES += \
 	../../src/qwt_plot_magnifier.cpp \
 	../../src/qwt_plot_marker.cpp \
 	../../src/qwt_plot_multi_barchart.cpp \
+	../../src/qwt_plot_opengl_canvas.cpp \
 	../../src/qwt_plot_panner.cpp \
 	../../src/qwt_plot_picker.cpp \
 	../../src/qwt_plot_rasteritem.cpp \
@@ -258,6 +262,7 @@ SOURCES += \
 	../../src/qwt_plot_svgitem.cpp \
 	../../src/qwt_plot_textlabel.cpp \
 	../../src/qwt_plot_tradingcurve.cpp \
+	../../src/qwt_plot_vectorfield.cpp \
 	../../src/qwt_plot_xml.cpp \
 	../../src/qwt_plot_zoneitem.cpp \
 	../../src/qwt_plot_zoomer.cpp \

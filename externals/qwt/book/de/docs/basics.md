@@ -212,6 +212,7 @@ titles << "Third group";
 d_barChartItem->setBarTitles( titles );
 ```
 Das Erscheinungsbild der Balken definiert man durch Erstellen und Setzen von `QwtColumnSymbol` Objekten:
+
 ```c++
 // Balkenfarben definieren
 static const char *colors[] = { "DarkOrchid", "SteelBlue", "Gold" };
@@ -247,6 +248,7 @@ for ( int i = 0; i < numSamples; i++ ) {
 // Abschließend werden dem BarPlot die Daten übergeben
 d_barChartItem->setSamples( samples );
 ```
+
 Ein derart erstelltes BarChart sieht zunächst so aus:
 ![BarChart ohne Achsenanpassung](imgs/barChartWithoutAxisConfig.png)
 
@@ -274,7 +276,7 @@ plotLayout()->setAlignCanvasToScale( QwtPlot::yRight, false );
 Manchmal möchte man die Balkengruppe besonders beschriften, wie in folgendem Beispiel:
 ![Monatsbilanzen](imgs/barChartSpezialXAxis.png)
 
-Dieses ist mit Qwt 6.1.x und den eingebauten Eigenschaften so nicht möglich. Kapitel [Balkendiagramme mit Kategoriebeschriftungen](customization/#balkendiagramme-mit-kategoriebeschriftungen) beschreibt die Vorgehensweise, um mit eigens angepassten Klassen, diese Diagramme zu erstellen.
+Dieses ist mit Qwt 6.1.x und den eingebauten Eigenschaften so nicht möglich. Kapitel [Balkendiagramme mit Kategoriebeschriftungen](/customization#balkendiagramme-mit-kategoriebeschriftungen) beschreibt die Vorgehensweise, um mit eigens angepassten Klassen, diese Diagramme zu erstellen.
 
 ### Balken entfernen und wieder hinzufügen
 Balken können mittels `QwtPlotMultiBarChart::setVisible()` sichtbar oder unsichtbar geschaltet werden. Dabei bleibt jedoch der entsprechende Legendeneintrag in der Liste. Möchte man den Balken einschließlich Legendenicon entfernen, so muss man das Balkendiagramm neu konfigurieren, d.h. neue Titel und neue Daten (mit passender Dimension des Samples-Matrix) setzen.
@@ -473,11 +475,11 @@ Man kann die Legendeneinträge auch komplett selbst zeichnen, wie im Kapitel [Ei
 
 ### Sichtbarkeit der Achsen
 
-Achsen können individuell sichtbar oder versteckt geschaltet werden. Standardmäßig sind die xBottom-Achse und die yLeft-Achse sichtbar. Die Sichtbarkeit wird mit `QwtAxis::setVisible(bool)` umgeschaltet.
+Achsen können individuell sichtbar oder versteckt geschaltet werden. Standardmäßig sind die xBottom-Achse und die yLeft-Achse sichtbar. Die Sichtbarkeit wird mit `QwtPlot::enableAxis(axisID, on)` umgeschaltet.
 
 ### Achsentitel
 
-Achsentitel werden mittels `setAxisTitle(int axisId, const QwtText &title)` gesetzt.
+Achsentitel werden mittels `QwtPlot::setAxisTitle(int axisId, const QwtText &title)` gesetzt.
 
 #### Achsentitel invertieren/von rechts lesbar machen
 Bei technischen Diagrammen ist es üblich, den Titel der rechten y-Achse von rechts lesbar zu zeichnen. Dies wird durch Setzen eines LayoutFlags des Achsenwidgets erreicht:
@@ -535,7 +537,7 @@ zone->attach( this );
 ----
 # Zeichenreihenfolge
 
-Alle Elemente, die innerhalb der Zeichenflächte gezeichnet werden, sind von QwtPlotItem abgeleitet. Diese Klasse hat die Eigenschaft zValue, welche die Zeichenreihenfolge definiert. Höhere Werte bedeuten 
+Alle Elemente, die innerhalb der Zeichenflächte gezeichnet werden, sind von QwtPlotItem abgeleitet. Diese Klasse hat die Eigenschaft zValue, welche die Zeichenreihenfolge definiert. Höhere Werte bedeuten
 
 - wie kontrolliert man die Zeichenreihenfolge (zValues)
 - Standardreihenfolge beim Zeichnen

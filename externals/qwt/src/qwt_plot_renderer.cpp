@@ -28,6 +28,10 @@
 #include <qstyleoption.h>
 #include <qimagewriter.h>
 
+#if (QT_VERSION >= 0x050F00)
+	#include <QPainterPath>
+#endif
+
 #ifndef QWT_NO_SVG
 #ifdef QT_SVG_LIB
 #if QT_VERSION >= 0x040500
@@ -804,6 +808,25 @@ void QwtPlotRenderer::renderCanvas( const QwtPlot *plot,
 
     if ( d_data->layoutFlags & FrameWithScales )
     {
+        // DO NOT move canvas frame to the outside - this would expose the
+        // outermost gridlines which we would like to paint over
+//        r.adjust( -1.0, -1.0, 1.0, 1.0 );
+
+        if ( !( d_data->discardFlags & DiscardCanvasBackground ) ) {
+            // fill canvas with brush
+            painter->save();
+
+            painter->setPen( Qt::NoPen );
+
+            const QBrush bgBrush =
+                canvas->palette().brush( plot->backgroundRole() );
+            painter->setBrush( bgBrush );
+
+            QwtPainter::drawRect( painter, r );
+
+            painter->restore();
+        }
+
         painter->save();
 
         painter->setClipRect( canvasRect );
@@ -811,20 +834,13 @@ void QwtPlotRenderer::renderCanvas( const QwtPlot *plot,
 
         painter->restore();
 
+        // draw canvas rect
         painter->save();
 
         double penWidth = 0.5;
-        // DO NOT move canvas frame to the outside - this would expose the
-        // outermost gridlines which we would like to paint over
-//        r.adjust( -1.0, -1.0, 1.0, 1.0 );
         painter->setPen( QPen( Qt::black, penWidth) );
 
-        if ( !( d_data->discardFlags & DiscardCanvasBackground ) )
-        {
-            const QBrush bgBrush =
-                canvas->palette().brush( plot->backgroundRole() );
-            painter->setBrush( bgBrush );
-        }
+        painter->setBrush( Qt::NoBrush );
 
         QwtPainter::drawRect( painter, r );
 
