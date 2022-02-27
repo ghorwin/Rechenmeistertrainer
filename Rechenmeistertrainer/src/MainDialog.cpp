@@ -23,6 +23,27 @@
 // 5 seconds per error
 #define ERROR_PENALTY 5
 
+class ValueItem : public QTableWidgetItem {
+public:
+	ValueItem(const QString & v) : QTableWidgetItem(v) {}
+	bool operator <(const QTableWidgetItem & other) const override {
+		int val = text().toInt();
+		int otherVal = other.text().toInt();
+		return val < otherVal;
+	}
+};
+
+
+class DateItem : public QTableWidgetItem {
+public:
+	DateItem(const QString & v) : QTableWidgetItem(v) {}
+	bool operator <(const QTableWidgetItem & other) const override {
+		QDateTime d = data(Qt::UserRole).toDateTime();
+		QDateTime otherd = other.data(Qt::UserRole).toDateTime();
+		return d < otherd;
+	}
+};
+
 MainDialog::MainDialog(QWidget *parent) :
 	QDialog(parent),
 	m_playerListModel(new QStringListModel(this)),
@@ -221,15 +242,16 @@ void MainDialog::updateHighscore() {
 	ui->tableWidget->setRowCount(scoreList.size());
 	int i=0;
 	for (QList<Score>::const_reverse_iterator it = scoreList.rbegin(); it != scoreList.rend(); ++it, ++i) {
-		QTableWidgetItem * item = new QTableWidgetItem(QString("%1").arg(it->points));
+		QTableWidgetItem * item = new ValueItem(QString("%1").arg(it->points));
 		item->setFlags(Qt::ItemIsEnabled);
 		ui->tableWidget->setItem(i,0, item);
 		item = new QTableWidgetItem(it->name);
 		item->setFlags(Qt::ItemIsEnabled);
 		ui->tableWidget->setItem(i,1, item);
-		item = new QTableWidgetItem(it->time.toString("dd.MM.yyyy hh:mm"));
-		item->setFlags(Qt::ItemIsEnabled);
-		ui->tableWidget->setItem(i,2, item);
+		DateItem * ditem = new DateItem(it->time.toString("dd.MM.yyyy hh:mm"));
+		ditem->setData(Qt::UserRole, it->time);
+		ditem->setFlags(Qt::ItemIsEnabled);
+		ui->tableWidget->setItem(i,2, ditem);
 	}
 	ui->tableWidget->resizeColumnToContents(0);
 	ui->tableWidget->resizeColumnToContents(1);

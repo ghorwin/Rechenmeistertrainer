@@ -17,9 +17,9 @@ class EinMalEinsDialog : public QDialog {
 	Q_OBJECT
 public:
 	explicit EinMalEinsDialog(QWidget *parent = nullptr);
-	~EinMalEinsDialog();
+	~EinMalEinsDialog() override;
 
-	int m_completed; // number of completed problems
+	int m_completed = -1; // number of completed problems
 	double m_duration; // elapsed time in seconds
 
 private slots:

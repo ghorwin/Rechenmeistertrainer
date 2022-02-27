@@ -108,6 +108,8 @@ void EinMalEinsDialog::onNextProblem() {
 	QDateTime endTime = QDateTime::currentDateTime();
 	m_duration = m_startTime.secsTo(endTime);
 	if (remainingProducts == 0 || m_duration >= TIME_LIMIT) {
+		if (m_completed != -1)
+			return;
 		// show result
 		QGridLayout * gridLay = qobject_cast<QGridLayout *>(ui->groupBoxGrid->layout());
 
