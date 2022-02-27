@@ -65,6 +65,7 @@ else {
 	INCLUDEPATH += /usr/include/qwt
 	LIBS += -lqwt-qt5
 }
+INCLUDEPATH += /usr/include/qwt
 
 SOURCES += \
 	../../src/main.cpp \

@@ -185,8 +185,9 @@ void MainDialog::on_comboBoxPlayer_currentIndexChanged(int) {
 }
 
 struct Score {
-	int points;
-	QString name;
+	int			points;
+	QString		name;
+	QDateTime	time;
 };
 
 bool operator<(const Score& lhs, const Score& rhs) {
@@ -197,8 +198,9 @@ void MainDialog::updateHighscore() {
 	ui->tableWidget->clear();
 	ui->tableWidget->verticalHeader()->setVisible(false);
 	ui->tableWidget->verticalHeader()->setDefaultSectionSize(18);
-	ui->tableWidget->setColumnCount(2);
-	ui->tableWidget->setHorizontalHeaderLabels(QStringList() << tr("Points") << tr("Player"));
+	ui->tableWidget->setColumnCount(3);
+	ui->tableWidget->setHorizontalHeaderLabels(QStringList() << tr("Points") << tr("Player") << tr("Time"));
+	ui->tableWidget->setSortingEnabled(true);
 	// create sorted list
 	QList<Score> scoreList;
 	for (QMap<QString, QList<Stat> >::const_iterator it = m_stats.begin(); it != m_stats.end(); ++it) {
@@ -210,7 +212,8 @@ void MainDialog::updateHighscore() {
 			// Worst value: 100000/5 min + 100 Fehler) = 100000/125
 
 			s.points = (int)(std::floor(100000.0/duration_with_penalty) - 124);
-			s.name = QString("%1 [%2]").arg(it.key()).arg(stit->date.toString("dd.MM.yyyy hh:mm"));
+			s.name = QString("%1").arg(it.key());
+			s.time = stit->date;
 			scoreList.append(s);
 		}
 	}
@@ -224,8 +227,12 @@ void MainDialog::updateHighscore() {
 		item = new QTableWidgetItem(it->name);
 		item->setFlags(Qt::ItemIsEnabled);
 		ui->tableWidget->setItem(i,1, item);
+		item = new QTableWidgetItem(it->time.toString("dd.MM.yyyy hh:mm"));
+		item->setFlags(Qt::ItemIsEnabled);
+		ui->tableWidget->setItem(i,2, item);
 	}
 	ui->tableWidget->resizeColumnToContents(0);
+	ui->tableWidget->resizeColumnToContents(1);
 	ui->tableWidget->horizontalHeader()->setStretchLastSection(true);
 }
 

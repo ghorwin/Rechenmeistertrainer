@@ -10,7 +10,7 @@
 #include <cmath>
 
 // time limit in seconds
-#define TIME_LIMIT 300
+#define TIME_LIMIT 10
 
 EinMalEinsDialog::EinMalEinsDialog(QWidget *parent) :
 	QDialog(parent),
@@ -22,10 +22,10 @@ EinMalEinsDialog::EinMalEinsDialog(QWidget *parent) :
 	// create a grid layout 11x11
 	QGridLayout * grid = new QGridLayout;
 
-	for (unsigned int i=0; i<11; ++i) {
+	for (int i=0; i<11; ++i) {
 		if (i==0) {
 			// first row, insert labels
-			for (unsigned int j=0; j<10; ++j) {
+			for (int j=0; j<10; ++j) {
 				QLabel * l = new QLabel(this);
 				l->setText(QString("%1").arg(j+1));
 				grid->addWidget(l, 0, 1+j);
@@ -36,7 +36,7 @@ EinMalEinsDialog::EinMalEinsDialog(QWidget *parent) :
 			QLabel * l = new QLabel(this);
 			l->setText(QString("%1").arg(i));
 			grid->addWidget(l, i, 0);
-			for (unsigned int j=0; j<10; ++j) {
+			for (int j=0; j<10; ++j) {
 				QToolButton * btn = new QToolButton(this);
 				// initially, buttons are empty
 				btn->setText("");
@@ -57,8 +57,8 @@ EinMalEinsDialog::EinMalEinsDialog(QWidget *parent) :
 	ui->groupBoxGrid->setLayout(grid);
 
 	// initialize problems
-	for (unsigned int i=0; i<10; ++i) {
-		for (unsigned int j=0; j<10; ++j) {
+	for (int i=0; i<10; ++i) {
+		for (int j=0; j<10; ++j) {
 			m_remainingProducts.append(QPair<int,int>(i+1,j+1));
 		}
 	}
@@ -117,7 +117,7 @@ void EinMalEinsDialog::onNextProblem() {
 				QToolButton * btn = qobject_cast<QToolButton*>(gridLay->itemAtPosition(i+1, j+1)->widget());
 				if (btn->text().isEmpty()) {
 					++missing;
-					btn->setText(QString("%1").arg((i+1)*(j+2)));
+					btn->setText(QString("%1").arg( (i+1)*(j+1)));
 					QPalette pal;
 					pal.setColor(QPalette::Button, QColor("maroon"));
 					pal.setColor(QPalette::ButtonText, QColor("white"));
@@ -134,7 +134,6 @@ void EinMalEinsDialog::onNextProblem() {
 									 .arg((int)std::floor((m_duration/60 - std::floor(m_duration/60))*60),2,10,QLatin1Char('0'))
 									 .arg(m_completed)
 									 .arg(m_errors));
-
 		}
 		else {
 			QMessageBox::information(this, tr("1x1 Success"), tr("Great! You solved all problems in %1:%2 minutes, with %3 errors.")
