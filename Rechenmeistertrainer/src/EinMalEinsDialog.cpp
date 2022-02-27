@@ -10,7 +10,7 @@
 #include <cmath>
 
 // time limit in seconds
-#define TIME_LIMIT 10
+#define TIME_LIMIT 300
 
 EinMalEinsDialog::EinMalEinsDialog(QWidget *parent) :
 	QDialog(parent),
