@@ -49,16 +49,18 @@ else {
 MOC_DIR = moc
 UI_DIR = ui
 
-win32-msvc* {
-	QMAKE_CXXFLAGS += /wd4996
-	QMAKE_CFLAGS += /wd4996
+windows {
+	win32-msvc* {
+		QMAKE_CXXFLAGS += /wd4996
+		QMAKE_CFLAGS += /wd4996
+	}
 }
 else {
 	QMAKE_CXXFLAGS += -std=c++11
 }
 
 
-win32-msvc* {
+windows {
 	INCLUDEPATH += ../../../externals/qwt/src
 	LIBS += -L../../../externals/ -lqwt6
 }
@@ -70,24 +72,21 @@ else {
 INCLUDEPATH += /usr/include/qwt
 
 SOURCES += \
-	../../src/main.cpp \
-	../../src/MainDialog.cpp \
-	../../src/EinMalEinsDialog.cpp
+	src/main.cpp \
+	src/MainDialog.cpp \
+	src/EinMalEinsDialog.cpp
 
 HEADERS += \
-	../../src/MainDialog.h \
-	../../src/EinMalEinsDialog.h
+	src/MainDialog.h \
+	src/EinMalEinsDialog.h
 
 FORMS += \
-../../src/MainDialog.ui \
-../../src/EinMalEinsDialog.ui
+	src/MainDialog.ui \
+	src/EinMalEinsDialog.ui
 
 RESOURCES += \
-	../../resources/Rechenmeistertrainer.qrc
+	resources/Rechenmeistertrainer.qrc
 
 TRANSLATIONS += \
-	../../resources/translations/Rechenmeistertrainer_de.ts
-
-DISTFILES += \
-	../../resources/translations/Rechenmeistertrainer_de.ts
+	resources/translations/Rechenmeistertrainer_de.ts
 

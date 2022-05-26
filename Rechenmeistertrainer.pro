@@ -4,13 +4,12 @@ TEMPLATE=subdirs
 SUBDIRS += Rechenmeistertrainer
 
 # where to find the sub projects
-Rechenmeistertrainer.file = ../../Rechenmeistertrainer/projects/Qt/Rechenmeistertrainer.pro
+Rechenmeistertrainer.file = Rechenmeistertrainer/Rechenmeistertrainer.pro
 
 # on Windows we build our own Qwt
-win32-msvc* {
+windows {
 	SUBDIRS += qwt
-	qwt.file = ../../externals/qwt/projects/Qt/qwt.pro
+	qwt.file = externals/qwt/projects/Qt/qwt.pro
 	Rechenmeistertrainer.depends = qwt
 }
-
 

@@ -1,3 +1,4 @@
 /release/windows/Rechenmeistertrainer.exe
 Makefile.*
 release_x64/
+*.pro.user
